@@ -53,11 +53,11 @@ public class CustomerService {
         }
     }
 
-    public CustomerResponseDto add(@RequestBody CustomerRequestDto dto) {
+    public CustomerResponseDto add(CustomerRequestDto dto) {
         try (socket){
             socket.open();
             return mapper.convertValue(
-                    client.add(mapper.convertValue(dto,CustomerThrift.class)),
+                    client.add(mapper.convertValue(dto, CustomerThrift.class)),
                     CustomerResponseDto.class);
         } catch (InvalidOperationException e) {
             throw new DataProcessingException(e.getMessage(), e);
@@ -66,7 +66,7 @@ public class CustomerService {
         }
     }
 
-    public void delete(@PathVariable Long id) {
+    public void delete(Long id) {
         try (socket){
             socket.open();
             client.delete(id);
@@ -77,8 +77,7 @@ public class CustomerService {
         }
     }
 
-    public CustomerResponseDto update(@PathVariable Long id,
-                                      @RequestBody CustomerRequestDto customerRequestDto) {
+    public CustomerResponseDto update(Long id, CustomerRequestDto customerRequestDto) {
         try (socket){
             socket.open();
             return mapper.convertValue(
@@ -91,7 +90,7 @@ public class CustomerService {
         }
     }
 
-    public CustomerResponseDto getByPhoneNumber(@PathVariable Long phoneNumber) {
+    public CustomerResponseDto getByPhoneNumber(Long phoneNumber) {
         try (socket){
             socket.open();
             return mapper.convertValue(client.findByPhoneNumber(phoneNumber),
@@ -103,8 +102,7 @@ public class CustomerService {
         }
     }
 
-    public CustomerResponseDto getByFirstNameAndLastName(@RequestParam String firstName,
-                                                         @RequestParam String lastName) {
+    public CustomerResponseDto getByFirstNameAndLastName(String firstName, String lastName) {
         try (socket){
             socket.open();
             return mapper.convertValue(

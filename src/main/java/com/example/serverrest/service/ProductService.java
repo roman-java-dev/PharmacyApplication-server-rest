@@ -2,7 +2,6 @@ package com.example.serverrest.service;
 
 import com.example.serverrest.config.ConfigProperties;
 import com.example.serverrest.dto.request.ProductRequestDto;
-import com.example.serverrest.dto.response.CustomerResponseDto;
 import com.example.serverrest.dto.response.ProductResponseDto;
 import com.example.serverrest.exception.DataProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,9 +38,8 @@ public class ProductService {
         client = new ProductServiceThrift.Client(multiplexedProtocol);
     }
 
-    public ProductResponseDto add(@RequestBody ProductRequestDto dto) {
+    public ProductResponseDto add(ProductRequestDto dto) {
         try (socket){
-            socket.open();
             socket.open();
             return mapper.convertValue(
                     client.add(mapper.convertValue(dto, ProductThrift.class)),
@@ -53,7 +51,7 @@ public class ProductService {
         }
     }
 
-    public ProductResponseDto getByName(@RequestParam String name) {
+    public ProductResponseDto getByName(String name) {
         try (socket){
             socket.open();
             return mapper.convertValue(client.findByName(name), ProductResponseDto.class);
@@ -77,8 +75,7 @@ public class ProductService {
         }
     }
 
-    public ProductResponseDto update(@PathVariable Long id,
-                                     @RequestBody ProductRequestDto productRequestDto) {
+    public ProductResponseDto update(Long id, ProductRequestDto productRequestDto) {
         try (socket){
             socket.open();
             return mapper.convertValue(
@@ -91,7 +88,7 @@ public class ProductService {
         }
     }
 
-    public void delete(@PathVariable Long id) {
+    public void delete(Long id) {
         try (socket){
             socket.open();
             client.delete(id);
