@@ -7,6 +7,7 @@ public record ServiceProperties(
         String customer,
         String product,
         String order,
-        String shoppingCart
+        String shoppingCart,
+        String auth
 ){
 }

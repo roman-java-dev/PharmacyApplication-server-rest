@@ -25,7 +25,15 @@ struct CustomerThrift {
     2: string firstName,
     3: string lastName,
     4: i64 phoneNumber,
-    5: i32 bonus
+    5: string email,
+    6: string password,
+    7: i32 bonus,
+    8: RoleThrift role
+}
+
+enum RoleThrift {
+    ADMIN,
+    CUSTOMER
 }
 
 service OrderServiceThrift {

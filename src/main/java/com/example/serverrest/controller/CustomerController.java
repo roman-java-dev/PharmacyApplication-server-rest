@@ -1,13 +1,14 @@
 package com.example.serverrest.controller;
 
-import com.example.serverrest.dto.request.CustomerRequestDto;
 import com.example.serverrest.dto.response.CustomerResponseDto;
 import com.example.serverrest.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,21 +16,15 @@ import java.util.List;
 public class CustomerController {
     private final CustomerService service;
 
-    @PostMapping
-    public CustomerResponseDto add(@Valid @RequestBody CustomerRequestDto dto) {
-        return service.add(dto);
-    }
-
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
 
-    @PutMapping("/{id}")
-    public CustomerResponseDto update(@PathVariable Long id,
-                                      @Valid @RequestBody CustomerRequestDto customerRequestDto) {
-        return service.update(id, customerRequestDto);
-
+    @PatchMapping("/me")
+    public CustomerResponseDto update(Authentication authentication,
+                                      @Valid @RequestBody Map<String, Object> fields) {
+        return service.update(authentication.getName(), fields);
     }
 
     @GetMapping

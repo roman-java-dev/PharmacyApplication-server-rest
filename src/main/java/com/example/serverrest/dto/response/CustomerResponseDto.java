@@ -5,5 +5,6 @@ public record CustomerResponseDto(
          String firstName,
          String lastName,
          Long phoneNumber,
+         String email,
          Integer bonus) {
 }
